@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.10"
-    idea
     application
 }
 
@@ -15,13 +14,16 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation(platform("org.junit:junit-bom:5.7.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     implementation(kotlin("script-runtime"))
 }
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
 
 tasks.withType<KotlinCompile>() {
