@@ -1,26 +1,24 @@
 fun validateSledPassword(passwordWithValidation: String) : Boolean {
-    val parts = passwordWithValidation.split(' ')
-    val range = parts[0].split('-').map { int -> int.toInt() }
-    val pattern = parts[1].first()
-    val password = parts[2]
+    val (range, target, password) = passwordWithValidation.split(' ')
+    val (min,max) = range.split('-').map { int -> int.toInt() }
+    val pattern = target.first()
 
-    val occurances = password.groupingBy { char -> char }.eachCount()
+    val occurrences = password.groupingBy { char -> char }.eachCount()
 
-    if (!occurances.containsKey(pattern)) {
+    if (!occurrences.containsKey(pattern)) {
         return false
     }
 
-    return occurances[pattern]!! >= range[0] && occurances[pattern]!! <= range[1]
+    return occurrences[pattern]!! in min..max
 }
 
 fun validateTobogganPassword(passwordWithValidation: String) : Boolean {
-    val parts = passwordWithValidation.split(' ')
-    val range = parts[0].split('-').map { int -> int.toInt() }
-    val pattern = parts[1].first()
-    val password = parts[2]
+    val (range, target, password) = passwordWithValidation.split(' ')
+    val (pos1,pos2) = range.split('-').map { int -> int.toInt() }
+    val pattern = target.first()
 
-    return (password[range[0] - 1] == pattern && password[range[1] - 1] != pattern) ||
-            password[range[0] - 1] != pattern && password[range[1] - 1] == pattern
+    return (password[pos1 - 1] == pattern && password[pos2 - 1] != pattern) ||
+            password[pos1 - 1] != pattern && password[pos2 - 1] == pattern
 }
 
 fun main(args: Array<String>) {
