@@ -3,6 +3,9 @@ import java.io.File
 fun readLines(path: String): List<String>
         = File(path).readLines()
 
+fun readText(path: String): String
+        = File(path).readText()
+
 class CombinationGenerator<T>(private val items: List<T>, choose: Int = 1) : Iterator<List<T>>, Iterable<List<T>> {
     private val indices = Array(choose) { it }
     private var first = true

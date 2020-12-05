@@ -2,14 +2,14 @@ import java.lang.Integer.min
 
 fun countTreesInPath(world: List<String>, right: Int, down: Int, x: Int = 0, y: Int = 0, trees: Long = 0): Long {
     val newX: Int = if (x + right < world[y].length) {
-       x + right
+        x + right
     } else {
         (x + right) - (world[y].length)
     }
     val newY: Int = min(y + down, world.size)
     val newTrees = if (newY < world.size && world[newY][newX] == '#') trees + 1 else trees
 
-    if(newY < world.size)
+    if (newY < world.size)
         return countTreesInPath(world, right, down, newX, newY, newTrees)
 
     return newTrees
